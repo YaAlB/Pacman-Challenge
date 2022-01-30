@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   base: {
     height: 21,
     width: 21,
-    backgroundColor: theme.palette.primary.dark,
   },
 }));
 

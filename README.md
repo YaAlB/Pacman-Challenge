@@ -2,9 +2,9 @@
 
 Using React to implement Pacman and using Jest for testing.
 
-Currently pacman uses [ R ] key for moving and [ Q, E ] for rotating 90 degrees.
+Currently pacman uses [ R ] key for moving and [ Q: Left, E: Right ] for rotating 90 degrees.
 
-The origin (1,1) is the NORTH EAST most corner.
+The origin (0,0) is the SOUTH WEST most corner.
 
 ## Tasks
 
@@ -26,14 +26,18 @@ The origin (1,1) is the NORTH EAST most corner.
 
 ## Install NPM
 
-`npm instal`
+`npm ci`
 
 ## Start React Packager
 
 `npm start`
 
-## Testing Using Jest
+## Test Data
 
-`npm test`
+- Place: 1, 1, North / Move[R] Move[R] Move[R] / Report: 1, 4, North
+- Place: 4, 0, East / Move[R] Right[E] Move[R] Right[E] Move[R] / Report: 3, 0, West
+- Place: 2, 2, West / Left[Q] Left[Q] Left[Q] Move[R] / Report: 2, 3, North
+- Place: 3, 3, South / Left[Q] Move[R] Left[Q] Move[R] / Place: 3, 4, South / Report: 3, 4, South
+- Left[Q] Move[R] Left[Q] Move[R] / Report: `disabled` / Place: 0, 0, South / Move[R] / Report: 0, 0, South
 
 ---

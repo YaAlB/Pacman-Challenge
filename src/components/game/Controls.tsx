@@ -27,6 +27,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const xy = [
   {
+    label: 0,
+    value: 0,
+  },
+  {
     label: 1,
     value: 1,
   },
@@ -41,10 +45,6 @@ const xy = [
   {
     label: 4,
     value: 4,
-  },
-  {
-    label: 5,
-    value: 5,
   },
 ];
 
@@ -73,6 +73,7 @@ const Controls: React.FC<ControlProps> = ({PacmanStore}): JSX.Element => {
   const [dir, setDirection] = useState('WEST');
   const styles = useStyles({});
 
+
   const handleNewGame = ():void => {
     store.dispatch(initGame(x, y, dir));
   };
@@ -96,35 +97,35 @@ const Controls: React.FC<ControlProps> = ({PacmanStore}): JSX.Element => {
   return (
     <>
       <div className={styles.score}>
-        <Typography variant="body1">
+        <Typography component="span" variant="body1">
           <b>X-Axis:</b>
           <div className="select-container">
             <select value={x} onChange={handleChangeX}>
               {xy.map(axis => (
-                <option value={axis.value}>{axis.label}</option>
+                <option key={Math.random().toString(36).substr(2, 9)} value={axis.value}>{axis.label}</option>
               ))}
             </select>
           </div>
         </Typography>
-        <Typography variant="body1">
+        <Typography component="span" variant="body1">
           <b>Y-Axis:</b>
           <div>
             <div className="select-container">
               <select value={y} onChange={handleChangeY}>
                 {xy.map(axis => (
-                  <option value={axis.value}>{axis.label}</option>
+                  <option key={Math.random().toString(36).substr(2, 9)} value={axis.value}>{axis.label}</option>
                 ))}
               </select>
             </div>
           </div>
         </Typography>
-        <Typography variant="body1">
+        <Typography component="span" variant="body1">
           <b>Direction:</b>
           <div>
             <div className="select-container">
               <select value={dir} onChange={handleChangeDirection}>
                 {directions.map(direction => (
-                  <option value={direction.value}>{direction.label}</option>
+                  <option key={Math.random().toString(36).substr(2, 9)} value={direction.value}>{direction.label}</option>
                 ))}
               </select>
             </div>
@@ -144,7 +145,7 @@ const Controls: React.FC<ControlProps> = ({PacmanStore}): JSX.Element => {
       <Button
         onClick={handleReport}
         className={styles.button}
-        disabled={PacmanStore.compassDirection === null}
+        disabled={PacmanStore.piece.x > 4 || PacmanStore.piece.y > 4}
         fullWidth
         variant="contained"
       >

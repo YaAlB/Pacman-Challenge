@@ -41,10 +41,10 @@ class Pacman extends Item implements GameBoardItem {
     }
     switch (this.forcedMove) {
       case 'right':
-        this.compassDirection = 'WEST';
+        this.compassDirection = 'EAST';
         break;
       case 'left':
-        this.compassDirection = 'EAST';
+        this.compassDirection = 'WEST';
         break;
       case 'up':
         this.compassDirection = 'NORTH';

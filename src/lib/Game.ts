@@ -10,12 +10,12 @@ enum gameMap {
   
 /** Holds the gameBoard state */
 const gameBoard = [
+  [2, 2, 2, 2, 2, 0, 0],
+  [2, 2, 2, 2, 2, 0, 0],
+  [2, 2, 2, 2, 2, 0, 0],
+  [2, 2, 2, 2, 2, 0, 0],
+  [2, 2, 2, 2, 2, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
-  [0, 2, 2, 2, 2, 2, 0],
-  [0, 2, 2, 2, 2, 2, 0],
-  [0, 2, 2, 2, 2, 2, 0],
-  [0, 2, 2, 2, 2, 2, 0],
-  [0, 2, 2, 2, 2, 2, 0],
   [0, 0, 0, 0, 0, 0, 0],
 ];
 
@@ -58,15 +58,13 @@ const GetPossibleMoves = (i: number, j: number, layout: GameBoardPiece[][]):Game
 const ProcessLayout = (layout: GameBoardPiece[][]): GameBoardPiece[][] => {
 
   const newLayout = layout;
-
-  for (let y = 0; y < layout.length; y += 1) {
+  
+  for (let y = layout.length - 1; y > -1; y -= 1) {
     for (let x = 0; x < layout[y].length; x += 1) {
       newLayout[y][x].moves = GetPossibleMoves(x, y, layout);
     }
   }
-  
   return newLayout;
-  
 };
 
 /**
@@ -78,20 +76,18 @@ const ProcessLayout = (layout: GameBoardPiece[][]): GameBoardPiece[][] => {
 const InitializeGame = (xAxis?: number, yAxis?: number, compassDirection?: string): GameState => {
   let layout: GameBoardPiece[][] = [];
   const items: GameBoardItem[][] = [];
-  const PacmanStore: Pacman = new Pacman({id: 'DUMMY', x: !xAxis ? 0 : xAxis, y: !yAxis ? 0 : yAxis, type: GameBoardPieceType.EMPTY, moves: {}}, items);
-
   
-
-  for (let y = 0; y < gameBoard.length; y += 1) {
-
+  const PacmanStore: Pacman = new Pacman({id: 'DUMMY', x: xAxis === undefined ? 6 : xAxis, y: yAxis === undefined  ? 6 : yAxis, type: GameBoardPieceType.EMPTY, moves: {}}, items);
+  
+  for (let y = gameBoard.length - 1; y > -1; y -= 1) {
     const layoutRow:GameBoardPiece[] = [];
     const itemsRow:GameBoardItem[] = [];
-
+  
     for (let x = 0; x < gameBoard[y].length; x += 1) {
       const val = gameBoard[y][x];
       const id = `PIECE::${y}::${x}`;
 
-      let item:GameBoardItem = { type: GameBoardItemType.EMPTY };
+      let item:GameBoardItem = { type: GameBoardItemType.EMPTY };  
       const piece:GameBoardPiece = {
         id, y, x, type: GameBoardPieceType.EMPTY, moves: {}
       };
@@ -110,11 +106,11 @@ const InitializeGame = (xAxis?: number, yAxis?: number, compassDirection?: strin
             break;
           case 'WEST':
             PacmanStore.compassDirection = 'WEST';
-            PacmanStore.forcedMove = 'right';
+            PacmanStore.forcedMove = 'left';
             break;
           case 'EAST':
             PacmanStore.compassDirection = 'EAST';
-            PacmanStore.forcedMove = 'left';
+            PacmanStore.forcedMove = 'right';
             break;
           default:
             PacmanStore.compassDirection = null;
@@ -125,18 +121,14 @@ const InitializeGame = (xAxis?: number, yAxis?: number, compassDirection?: strin
       switch (val) {
         case gameMap.WALL:
           piece.type = GameBoardPieceType.WALL;
-          break;
-        case gameMap.PACMAN:
-          PacmanStore.setPiece(piece);
-          item = PacmanStore;
-          break;     
+          break;  
         default: break;
       }
       layoutRow.push(piece);
       itemsRow.push(item);
     }
     layout.push(layoutRow);
-    items.push(itemsRow);
+    items.unshift(itemsRow);
   }
   layout = ProcessLayout(layout);
 
