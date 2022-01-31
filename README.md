@@ -1,6 +1,6 @@
 # Pacman Challenge
 
-Using React to implement Pacman and using Jest for testing.
+Using React to implement Pacman.
 
 Currently pacman uses [ R ] key for moving and [ Q: Left, E: Right ] for rotating 90 degrees.
 
